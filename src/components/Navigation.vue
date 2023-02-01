@@ -55,7 +55,7 @@ const state = reactive({
                 class="w-14 h-14 rounded-full border border-gray flex items-center justify-center"
               >
                 <img
-                  src="@/assets/ash.jpeg"
+                  src="@/assets/ash.png"
                   class="w-full rounded-full"
                   alt=""
                 />
@@ -138,7 +138,7 @@ const state = reactive({
           <div
             class="w-14 h-14 rounded-full border border-gray flex items-center justify-center"
           >
-            <img src="@/assets/ash.jpeg" class="w-full rounded-full" alt="" />
+            <img src="@/assets/ash.png" class="w-full rounded-full" alt="" />
           </div>
           <div
             class="flex-none w-4 h-4"
