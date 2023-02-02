@@ -39,7 +39,7 @@ function checkContentPosition() {
     <Transition>
       <div
         v-if="showContent"
-        class="absolute left-0 right-0"
+        class="absolute left-0 right-0 z-10"
         :class="[checkContentPosition()]"
       >
         <slot name="content"></slot>

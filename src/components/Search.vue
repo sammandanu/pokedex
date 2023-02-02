@@ -3,18 +3,22 @@ import { ref, onMounted } from "vue";
 import Dropdown from "@/components/Dropdown.vue";
 import { pokemonTypes } from "@/stores/types";
 
+const searchInput = ref("");
 const showFilter = ref(false);
 const store = pokemonTypes();
 const { types } = store;
 let selectedIcon = ref();
 let selectedLabel = ref();
+const emit = defineEmits(["chooseType", "resetType", "update:modelValue"]);
 function chooseType(icon: String, key: String) {
   selectedIcon.value = icon;
   selectedLabel.value = key;
+  emit("chooseType", key);
 }
 function resetType() {
   selectedIcon.value = "";
   selectedLabel.value = "";
+  emit("resetType");
 }
 </script>
 
@@ -45,6 +49,8 @@ function resetType() {
           type="text"
           class="w-full bg-transparent focus:outline-none"
           placeholder="Pokemon Name..."
+          @input="$emit('update:modelValue', searchInput)"
+          v-model="searchInput"
         />
       </div>
     </div>
@@ -115,11 +121,6 @@ function resetType() {
           </div>
         </template>
       </Dropdown>
-      <button
-        class="bg-bgPink text-textYellow cursor-pointer rounded-xl py-2 px-12"
-      >
-        FIND
-      </button>
     </div>
   </div>
 </template>

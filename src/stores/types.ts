@@ -34,7 +34,7 @@ export const pokemonTypes = defineStore("pokemonTypes", {
             "background: rgb(122,199,76);background: linear-gradient(180deg, rgba(122,199,76,1) 10%, rgba(255,255,255,1) 60%);",
           icon: grass,
         },
-        eletric: {
+        electric: {
           color:
             "background: rgb(247,208,44);background: linear-gradient(180deg, rgba(247,208,44,1) 10%, rgba(255,255,255,1) 60%);",
           icon: electric,
