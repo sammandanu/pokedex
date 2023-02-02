@@ -32,6 +32,7 @@ const state = reactive({
             >
             <RouterLink
               class="hover:underline decoration-primary underline-offset-8"
+              :class="path === 'Favorite' ? 'underline' : ''"
               to="/favorite"
               >FAVORITE</RouterLink
             >

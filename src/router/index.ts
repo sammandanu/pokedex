@@ -11,13 +11,17 @@ const router = createRouter({
         {
           path: "",
           redirect: "/find",
-          // beforeEnter: authGuard,
+          name: "redirect",
         },
         {
           name: "Find",
           path: "find",
           component: () => import("@/views/Find.vue"),
-          // beforeEnter: authGuard,
+        },
+        {
+          name: "Favorite",
+          path: "favorite",
+          component: () => import("@/views/Favorite.vue"),
         },
       ],
     },

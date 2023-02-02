@@ -2,28 +2,14 @@
 import { reactive, onMounted, computed, ref, onUnmounted } from "vue";
 import Search from "@/components/Search.vue";
 import PokemonCard from "@/components/PokemonCard.vue";
-import { pokemonTypes } from "@/stores/types";
+import { pokemonFavorites } from "@/stores/favorites";
+import type { Pokemon } from "@/utils/interfaceList";
 
 // fetch pokemon and variable declaration
 
-const store = pokemonTypes();
-
-interface TypeData {
-  name: string;
-}
-interface Type {
-  type: TypeData;
-}
-
-interface Pokemon {
-  name: string;
-  types: Type[];
-  image: string;
-}
+const storeFavorites = pokemonFavorites();
 
 let pokemons = reactive<Pokemon[]>([]);
-
-const { types } = store;
 
 let url = ref("https://pokeapi.co/api/v2/pokemon");
 
@@ -50,13 +36,16 @@ async function fetchPokemonDetail(value: { name: string }[]) {
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${val.name}`);
       const resJson = await res.json();
       if (resJson) {
-        const reData = {
-          id: resJson.id,
-          name: resJson.name,
-          types: resJson.types,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${resJson.id}.png`,
-        };
-        pokemons.push(reData);
+        if (!pokemons.some((res) => res.id === resJson.id)) {
+          const reData = {
+            id: resJson.id,
+            name: resJson.name,
+            types: resJson.types,
+            image: resJson.sprites.other.home.front_default,
+            favorite: storeFavorites.checkFavorites(resJson.id),
+          };
+          pokemons.push(reData);
+        }
       }
     } catch (error) {
       console.log("Something went wrong");
@@ -115,8 +104,19 @@ const handleScroll = () => {
   }
 };
 
+// favorite handler
+function addFavorite(id: number) {
+  const pokemonIndex = pokemons.findIndex((res) => res.id === id);
+  pokemons[pokemonIndex].favorite = true;
+}
+function deleteFavorite(id: number) {
+  const pokemonIndex = pokemons.findIndex((res) => res.id === id);
+  pokemons[pokemonIndex].favorite = false;
+}
+
 onMounted(() => {
   fetchPokemons();
+  console.log();
 });
 </script>
 
@@ -132,7 +132,11 @@ onMounted(() => {
       />
       <!-- Pokemons -->
       <div class="" ref="scrollComponent">
-        <PokemonCard :data="filteredPokemon"></PokemonCard>
+        <PokemonCard
+          :data="filteredPokemon"
+          @add-favorites="addFavorite"
+          @deleteFavorites="deleteFavorite"
+        ></PokemonCard>
       </div>
     </div>
   </div>

@@ -1,68 +1,12 @@
 <script setup lang="ts">
-import { reactive, onMounted, computed, ref, onUnmounted } from "vue";
+import { computed, ref } from "vue";
 import Search from "@/components/Search.vue";
 import PokemonCard from "@/components/PokemonCard.vue";
-import { pokemonTypes } from "@/stores/types";
+import { pokemonFavorites } from "@/stores/favorites";
 
-// fetch pokemon and variable declaration
+// get favorites pokemon
 
-const store = pokemonTypes();
-
-interface TypeData {
-  name: string;
-}
-interface Type {
-  type: TypeData;
-}
-
-interface Pokemon {
-  name: string;
-  types: Type[];
-  image: string;
-}
-
-let pokemons = reactive<Pokemon[]>([]);
-
-const { types } = store;
-
-let url = ref("https://pokeapi.co/api/v2/pokemon");
-
-async function fetchPokemons() {
-  if (url.value) {
-    try {
-      const res = await fetch(url.value);
-      const resJson = await res.json();
-      if (resJson) {
-        url.value = resJson.next;
-        let listPokemon: { name: string }[] = resJson.results;
-
-        fetchPokemonDetail(listPokemon);
-      }
-    } catch (error) {
-      console.log("Something went wrong");
-    }
-  }
-}
-
-async function fetchPokemonDetail(value: { name: string }[]) {
-  value.forEach(async (val) => {
-    try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${val.name}`);
-      const resJson = await res.json();
-      if (resJson) {
-        const reData = {
-          id: resJson.id,
-          name: resJson.name,
-          types: resJson.types,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${resJson.id}.png`,
-        };
-        pokemons.push(reData);
-      }
-    } catch (error) {
-      console.log("Something went wrong");
-    }
-  });
-}
+const storeFavorites = pokemonFavorites();
 
 // search feature
 
@@ -71,10 +15,10 @@ const typeFilter = ref("");
 
 function filterPokemon() {
   if (!searchInput) {
-    return pokemons;
+    return storeFavorites.favorites;
   }
 
-  let data = pokemons.filter((pokemon) =>
+  let data = storeFavorites.favorites.filter((pokemon) =>
     pokemon.name.includes(searchInput.value)
   );
 
@@ -99,31 +43,19 @@ function typeHandler(val: string) {
   }
 }
 
-// infinite scroll
-const scrollComponent = ref<HTMLInputElement>();
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-});
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
-const handleScroll = () => {
-  if (
-    scrollComponent.value!.getBoundingClientRect().bottom < window.innerHeight
-  ) {
-    fetchPokemons();
-  }
-};
-
-onMounted(() => {
-  fetchPokemons();
-});
+// favorite handler
+function deleteFavorite(id: number) {
+  const pokemonIndex = storeFavorites.favorites.findIndex(
+    (res) => res.id === id
+  );
+  storeFavorites.favorites[pokemonIndex].favorite = false;
+}
 </script>
 
 <template>
   <div class="max-w-screen-xl mx-auto px-16 xl:px-4">
     <div class="pt-20 pb-32">
-      <div class="text-4xl text-header mb-8">Find Pokemon</div>
+      <div class="text-4xl text-header mb-8">Favorite Pokemon</div>
       <!-- search and filter -->
       <Search
         v-model="searchInput"
@@ -131,9 +63,10 @@ onMounted(() => {
         @resetType="typeHandler"
       />
       <!-- Pokemons -->
-      <div class="" ref="scrollComponent">
-        <PokemonCard :data="filteredPokemon"></PokemonCard>
-      </div>
+      <PokemonCard
+        :data="filteredPokemon"
+        @deleteFavorites="deleteFavorite"
+      ></PokemonCard>
     </div>
   </div>
 </template>
