@@ -3,15 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply bg-primary scroll-smooth;
+  }
+}
 @layer components {
   .text-header {
     @apply text-textPrimary font-bold;
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
 body {
   font-family: "Ubuntu", sans-serif;
 }

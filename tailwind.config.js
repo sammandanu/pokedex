@@ -9,6 +9,7 @@ module.exports = {
         gray: "#969BA5",
         bgPink: "#F27E7E",
         textYellow: "#FFC37C",
+        bgInputGray: "#EBF3F5",
       },
     },
   },

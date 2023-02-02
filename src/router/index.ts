@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import("../views/core/Layout.vue"),
       children: [
         {
+          path: "",
+          redirect: "/find",
+          // beforeEnter: authGuard,
+        },
+        {
           name: "Find",
           path: "find",
           component: () => import("@/views/Find.vue"),

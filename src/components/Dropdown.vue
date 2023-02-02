@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 const props = defineProps({
   showContent: {
     type: Boolean,
@@ -13,8 +14,10 @@ const props = defineProps({
 function checkContentPosition() {
   if (props.contentPosition === "bottom") {
     return "top-16";
-  } else {
+  } else if (props.contentPosition === "top") {
     return "-top-14";
+  } else {
+    return props.contentPosition;
   }
 }
 </script>

@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation.vue";
 </script>
 
 <template>
-  <div class="bg-primary min-h-screen">
+  <div class="min-h-screen">
     <Navigation />
     <RouterView class="pt-[126px]" />
   </div>

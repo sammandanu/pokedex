@@ -10,7 +10,9 @@ const state = reactive({
 </script>
 
 <template>
-  <div class="fixed top-0 left-0 right-0 bg-white rounded-b-full shadow-xl">
+  <div
+    class="fixed top-0 left-0 right-0 bg-white rounded-b-full shadow-xl z-[9999999999]"
+  >
     <div class="max-w-screen-xl mx-auto px-16 xl:px-4 py-8">
       <div class="flex items-center justify-center lg:justify-between gap-20">
         <!-- logo -->
@@ -101,7 +103,7 @@ const state = reactive({
   </div>
   <!-- mobile nav -->
   <div
-    class="fixed lg:hidden bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-full"
+    class="fixed lg:hidden bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-full z-[9999999999]"
   >
     <!-- navigation -->
     <div
