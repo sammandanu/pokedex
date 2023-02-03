@@ -40,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-screen-xl mx-auto px-16 xl:px-4">
+  <div class="max-w-screen-xl mx-auto px-4 xl:px-4">
     <div class="pt-20 pb-32" v-if="!loading">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <PokemonCard
