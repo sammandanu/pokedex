@@ -24,7 +24,7 @@ function checkContentPosition() {
 
 <template>
   <div class="relative">
-    <div class="z-10 relative">
+    <div class="z-20 relative">
       <slot></slot>
     </div>
     <!-- to close when clicked on space around it-->
@@ -39,7 +39,7 @@ function checkContentPosition() {
     <Transition>
       <div
         v-if="showContent"
-        class="absolute left-0 right-0 z-10"
+        class="absolute left-0 right-0 z-20"
         :class="[checkContentPosition()]"
       >
         <slot name="content"></slot>

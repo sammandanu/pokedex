@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { computed, reactive } from "vue";
+import { pokemonFavorites } from "@/stores/favorites";
+
 import Dropdown from "@/components/Dropdown.vue";
 const route = useRoute();
 const path = computed(() => route.name);
 const state = reactive({
   openDropdown: false,
 });
+const storeFavorites = pokemonFavorites();
+// logout will reset the apps
+function logout() {
+  state.openDropdown = false;
+  localStorage.removeItem("pokemonFavorites");
+  storeFavorites.favorites = [];
+}
 </script>
 
 <template>
@@ -93,7 +102,7 @@ const state = reactive({
             <div
               v-if="state.openDropdown"
               class="bg-white shadow-xl p-4 border border-gray rounded-xl hover:bg-bgPink hover:text-textYellow cursor-pointer"
-              @click="state.openDropdown = false"
+              @click="logout()"
             >
               Logout
             </div>
@@ -170,7 +179,7 @@ const state = reactive({
         <template #content>
           <div
             class="bg-white shadow-xl p-2 border border-gray rounded-xl hover:bg-bgPink hover:text-textYellow cursor-pointer text-xl"
-            @click="state.openDropdown = false"
+            @click="logout()"
           >
             Logout
           </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, onMounted, computed, ref, onUnmounted } from "vue";
 import Search from "@/components/Search.vue";
-import PokemonCard from "@/components/PokemonCard.vue";
+import PokemonCards from "@/components/PokemonCards.vue";
 import { pokemonFavorites } from "@/stores/favorites";
 import type { Pokemon } from "@/utils/interfaceList";
 
@@ -43,6 +43,11 @@ async function fetchPokemonDetail(value: { name: string }[]) {
             types: resJson.types,
             image: resJson.sprites.other.home.front_default,
             favorite: storeFavorites.checkFavorites(resJson.id),
+            abilities: resJson.abilities,
+            weight: resJson.weight,
+            height: resJson.height,
+            stats: resJson.height,
+            moves: resJson.height,
           };
           pokemons.push(reData);
         }
@@ -104,19 +109,8 @@ const handleScroll = () => {
   }
 };
 
-// favorite handler
-function addFavorite(id: number) {
-  const pokemonIndex = pokemons.findIndex((res) => res.id === id);
-  pokemons[pokemonIndex].favorite = true;
-}
-function deleteFavorite(id: number) {
-  const pokemonIndex = pokemons.findIndex((res) => res.id === id);
-  pokemons[pokemonIndex].favorite = false;
-}
-
 onMounted(() => {
   fetchPokemons();
-  console.log();
 });
 </script>
 
@@ -132,11 +126,7 @@ onMounted(() => {
       />
       <!-- Pokemons -->
       <div class="" ref="scrollComponent">
-        <PokemonCard
-          :data="filteredPokemon"
-          @add-favorites="addFavorite"
-          @deleteFavorites="deleteFavorite"
-        ></PokemonCard>
+        <PokemonCards :data="filteredPokemon"></PokemonCards>
       </div>
     </div>
   </div>

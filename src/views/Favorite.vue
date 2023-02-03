@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import Search from "@/components/Search.vue";
-import PokemonCard from "@/components/PokemonCard.vue";
+import PokemonCards from "@/components/PokemonCards.vue";
 import { pokemonFavorites } from "@/stores/favorites";
 
 // get favorites pokemon
@@ -63,10 +63,10 @@ function deleteFavorite(id: number) {
         @resetType="typeHandler"
       />
       <!-- Pokemons -->
-      <PokemonCard
+      <PokemonCards
         :data="filteredPokemon"
         @deleteFavorites="deleteFavorite"
-      ></PokemonCard>
+      ></PokemonCards>
     </div>
   </div>
 </template>

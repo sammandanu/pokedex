@@ -23,6 +23,11 @@ const router = createRouter({
           path: "favorite",
           component: () => import("@/views/Favorite.vue"),
         },
+        {
+          name: "Details",
+          path: "details/:name",
+          component: () => import("@/views/Details.vue"),
+        },
       ],
     },
     {
