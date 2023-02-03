@@ -28,6 +28,7 @@ function login() {
               type="text"
               placeholder="Trainers Name"
               class="w-full border border-borderGray p-2 bg-bgInputGray focus:outline-none rounded-xl placeholder:text-center mb-4 text-center"
+              @keyup.enter="login"
             />
             <button
               class="w-full p-2 bg-bgPink font-bold text-textYellow rounded-xl"
