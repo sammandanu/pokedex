@@ -42,7 +42,7 @@ onMounted(() => {
 <template>
   <div class="max-w-screen-xl mx-auto px-16 xl:px-4">
     <div class="pt-20 pb-32" v-if="!loading">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <PokemonCard
           :data="pokemon"
           class="col-span-1"
@@ -96,7 +96,7 @@ onMounted(() => {
           </div>
         </div>
         <!-- weight, height, moves -->
-        <div class="bg-white rounded-xl col-span-2 p-4">
+        <div class="bg-white rounded-xl col-span-1 lg:col-span-2 p-4">
           <div class="text-xl font-bold text-textPrimary mt-8 mb-4">Moves</div>
           <div class="flex items-center flex-wrap gap-2">
             <div

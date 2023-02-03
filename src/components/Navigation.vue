@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { computed, reactive } from "vue";
 import { pokemonFavorites } from "@/stores/favorites";
 
 import Dropdown from "@/components/Dropdown.vue";
 const route = useRoute();
+const router = useRouter();
 const path = computed(() => route.name);
 const state = reactive({
   openDropdown: false,
+  trainersName: localStorage.getItem("trainersName"),
 });
 const storeFavorites = pokemonFavorites();
 // logout will reset the apps
 function logout() {
   state.openDropdown = false;
   localStorage.removeItem("pokemonFavorites");
+  localStorage.removeItem("trainersName");
   storeFavorites.favorites = [];
+  router.push("/welcome");
 }
 </script>
 
@@ -60,7 +64,11 @@ function logout() {
           >
             <div class="text-right">
               <div class="text-xs text-gray">Trainers Name</div>
-              <div class="text-textPrimary font-medium text-2xl">John Doe</div>
+              <div
+                class="text-textPrimary font-medium text-2xl truncate max-w-[200px]"
+              >
+                {{ state.trainersName }}
+              </div>
             </div>
             <div class="flex-none flex items-center gap-2">
               <div
